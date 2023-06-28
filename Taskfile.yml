@@ -1,0 +1,14 @@
+version: '3'
+
+tasks:
+  default:
+    cmds:
+      - task: test
+
+  test:
+    cmds:
+      - gotestsum
+  
+  watch:
+    cmds:
+      - gotestsum --watch
