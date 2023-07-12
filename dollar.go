@@ -1,21 +1,25 @@
 package main
 
 type Dollar struct {
-	amount int
+	money *Money
 }
 
 func NewDollar(amount int) *Dollar {
 	return &Dollar{
-		amount: amount,
+		money: NewMoney(amount),
 	}
 }
 
 func (d *Dollar) Times(n int) *Dollar {
 	return &Dollar{
-		amount: d.amount * n,
+		money: d.money.Times(n),
 	}
 }
 
-func (d *Dollar) Equals(a *Dollar) bool {
-	return d.amount == a.amount
+func (d *Dollar) Equals(a interface{}) bool {
+	dollar, ok := a.(*Dollar)
+	if !ok {
+		return false
+	}
+	return d.money.Equals(dollar.money)
 }
