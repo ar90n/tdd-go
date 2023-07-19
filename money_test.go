@@ -25,3 +25,8 @@ func TestFrancMultiplication(t *testing.T) {
 	assert.Equal(t, NewFranc(10), five.Times(2))
 	assert.Equal(t, NewFranc(15), five.Times(3))
 }
+
+func TestCurrency(t *testing.T) {
+	assert.Equal(t, "USD", NewDollar(1).Currency())
+	assert.Equal(t, "CHF", NewFranc(1).Currency())
+}

@@ -1,16 +1,16 @@
 package main
 
 type Franc struct {
-	money *Money
+	money *MoneyImpl
 }
 
-func NewFranc(amount int) *Franc {
+func NewFranc(amount int) Money {
 	return &Franc{
-		money: NewMoney(amount),
+		money: NewMoneyImpl(amount, "CHF"),
 	}
 }
 
-func (d *Franc) Times(n int) *Franc {
+func (d *Franc) Times(n int) Money {
 	return &Franc{
 		money: d.money.Times(n),
 	}
@@ -22,4 +22,8 @@ func (d *Franc) Equals(a interface{}) bool {
 		return false
 	}
 	return d.money.Equals(franc.money)
+}
+
+func (d *Franc) Currency() string {
+	return d.money.Currency()
 }

@@ -1,22 +1,34 @@
 package main
 
-type Money struct {
+type Money interface {
+	Times(n int) Money
+	Equals(a interface{}) bool
+	Currency() string
+}
+
+type MoneyImpl struct {
 	amount int
+	currency string
 }
 
-func NewMoney(amount int) *Money {
-	return &Money{
+func NewMoneyImpl(amount int, currency string) *MoneyImpl {
+	return &MoneyImpl{
 		amount: amount,
-	}
-	
+		currency: currency,
+	}	
 }
 
-func (d *Money) Times(n int) *Money {
-	return &Money{
+func (d *MoneyImpl) Times(n int) *MoneyImpl {
+	return &MoneyImpl{
 		amount: d.amount * n,
+		currency: d.currency,
 	}
 }
 
-func (d *Money) Equals(a *Money) bool {
+func (d *MoneyImpl) Equals(a *MoneyImpl) bool {
 	return d.amount == a.amount
+}
+
+func (d *MoneyImpl) Currency() string {
+	return d.currency
 }
