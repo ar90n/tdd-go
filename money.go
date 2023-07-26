@@ -1,34 +1,53 @@
 package main
 
-type Money interface {
-	Times(n int) Money
-	Equals(a interface{}) bool
-	Currency() string
-}
+import "fmt"
 
-type MoneyImpl struct {
+type Money struct {
 	amount int
 	currency string
 }
 
-func NewMoneyImpl(amount int, currency string) *MoneyImpl {
-	return &MoneyImpl{
+func NewMoneyImpl(amount int, currency string) *Money {
+	return &Money{
 		amount: amount,
 		currency: currency,
 	}	
 }
 
-func (d *MoneyImpl) Times(n int) *MoneyImpl {
-	return &MoneyImpl{
+func (d *Money) Times(n int) *Money {
+	return &Money{
 		amount: d.amount * n,
 		currency: d.currency,
 	}
 }
 
-func (d *MoneyImpl) Equals(a *MoneyImpl) bool {
-	return d.amount == a.amount
+func (d *Money) Equals(a interface{}) bool {
+	m, ok := a.(*Money)
+	if !ok {
+		return false
+	}
+	return d.amount == m.amount && d.currency == m.currency
 }
 
-func (d *MoneyImpl) Currency() string {
+func (d *Money) Currency() string {
 	return d.currency
+}
+
+func (d *Money) Plus(added *Money) *Money {
+	return &Money{
+		amount: d.amount + added.amount,
+		currency: d.currency,
+	}
+}
+
+func (d *Money) ToString() string {
+	return fmt.Sprintf("%v %v", d.amount, d.currency)
+}
+
+func NewDollar(amount int) *Money {
+	return NewMoneyImpl(amount, "USD")
+}
+
+func NewFranc(amount int) *Money {
+	return NewMoneyImpl(amount,"CHF")
 }
