@@ -33,11 +33,12 @@ func (d *Money) Currency() string {
 	return d.currency
 }
 
-func (d *Money) Plus(added *Money) *Money {
-	return &Money{
-		amount: d.amount + added.amount,
-		currency: d.currency,
-	}
+func (d *Money) Plus(added *Money) Expression {
+	return NewSum(d, added)
+}
+
+func (d *Money) Reduce(to string) *Money {
+	return d
 }
 
 func (d *Money) ToString() string {
